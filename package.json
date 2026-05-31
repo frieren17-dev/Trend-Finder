@@ -1,0 +1,13 @@
+{
+  "name": "trend-finder",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Trend research & data-collection system — Node frontend server + proxies.",
+  "scripts": {
+    "build": "npm --prefix frontend install && npm --prefix frontend run build",
+    "serve": "node serve.mjs",
+    "start": "node serve.mjs",
+    "dev:frontend": "npm --prefix frontend run build -- --watch"
+  }
+}

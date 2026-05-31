@@ -1,0 +1,17 @@
+# ── secrets ─────────────────────────────────────────────
+.env
+*.env
+!.env.example
+
+# ── python ──────────────────────────────────────────────
+backend/.venv/
+__pycache__/
+*.pyc
+
+# ── node / frontend build ───────────────────────────────
+node_modules/
+frontend/dist/
+
+# ── os / editor ─────────────────────────────────────────
+.DS_Store
+Thumbs.db

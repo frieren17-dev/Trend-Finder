@@ -1,0 +1,91 @@
+.notice {
+  --yellow: #f6c945;
+  --yellow-bg: #fbf0c9;
+  --yellow-ink: #5c4a08;
+  background: var(--yellow-bg);
+  border: 1.5px solid var(--yellow);
+  border-left-width: 5px;
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  color: var(--yellow-ink);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.badge {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.open {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--yellow-ink);
+  text-decoration: underline;
+}
+
+.msg {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  margin: 0 0 12px;
+}
+
+.form {
+  display: flex;
+  gap: 8px;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--ink);
+  background: #fff;
+  border: 1.5px solid var(--yellow);
+  border-radius: var(--radius);
+  padding: 8px 10px;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--yellow-ink);
+}
+
+.go {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--yellow-ink);
+  background: var(--yellow);
+  border: 1.5px solid var(--yellow-ink);
+  border-radius: var(--radius);
+  padding: 0 14px;
+  cursor: pointer;
+  transition: transform 0.15s var(--ease);
+}
+
+.go:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.go:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

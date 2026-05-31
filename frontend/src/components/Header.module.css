@@ -1,0 +1,30 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(6px);
+  border-bottom: 2px solid var(--line);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 76px;
+}
+
+.brand {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+.star {
+  color: var(--accent);
+  font-size: 0.6em;
+  vertical-align: super;
+  margin-left: 0.05em;
+}

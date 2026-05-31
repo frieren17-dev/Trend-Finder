@@ -1,0 +1,121 @@
+.scroll {
+  overflow: auto;
+  max-height: 60vh;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+}
+
+/* sticky designed header */
+.table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 10px 12px;
+  white-space: nowrap;
+}
+
+.table tbody td {
+  padding: 10px 12px;
+  border-bottom: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+  vertical-align: top;
+}
+
+/* zebra striping + hover */
+.table tbody tr:nth-child(even) {
+  background: color-mix(in srgb, var(--paper-2) 55%, transparent);
+}
+
+.table tbody tr:hover {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* column widths */
+.colRank {
+  width: 52px;
+}
+.colSrc {
+  width: 130px;
+}
+.colUrl {
+  width: 150px;
+}
+
+.rank {
+  font-family: var(--mono);
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.idea {
+  font-weight: 500;
+}
+
+.src {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.article {
+  color: var(--ink);
+  max-width: 280px;
+}
+
+.url a {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.url a:hover {
+  text-decoration: underline;
+}
+
+.note {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.export {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--on-accent);
+  background: var(--accent);
+  border: 1.5px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background 0.18s var(--ease);
+}
+
+.export:hover {
+  background: var(--accent-deep);
+}

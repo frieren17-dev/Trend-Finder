@@ -1,0 +1,154 @@
+/* ══════════════════════════════════════════════════════════════════════
+   THE TREND INDEX — editorial / print-magazine design system
+   Warm paper · near-black ink · one hot vermilion accent.
+   Display: Fraunces (variable serif).  Meta/UI: Space Mono.
+   ══════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── palette ───────────────────────────────────────────── */
+  --paper: #efe7d8;        /* warm cream stock */
+  --paper-2: #e6dcc7;      /* deeper panel tone */
+  --ink: #17120c;          /* warm near-black */
+  --ink-soft: #6a6052;     /* muted brown-grey for meta */
+  --accent: #e8431f;       /* hot vermilion = "trending" */
+  --accent-deep: #c4330f;
+  --on-accent: #fdf3e7;
+  --line: #17120c;
+
+  /* ── type ──────────────────────────────────────────────── */
+  --display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --mono: 'Space Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  /* ── shape / motion ────────────────────────────────────── */
+  --radius: 2px;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 15px;
+  background-color: var(--paper);
+  color: var(--ink);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Paper grain + a faint warm vignette for atmosphere/depth. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+  opacity: 0.06;
+}
+
+#root {
+  position: relative;
+  z-index: 2;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--display);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+/* ── reusable bits ───────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 56px);
+}
+
+/* Mono "eyebrow" label used across pages */
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Editorial ink button → inverts to accent on hover */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--ink);
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius);
+  padding: 0.95em 1.6em;
+  cursor: pointer;
+  transition: background 0.25s var(--ease), color 0.25s var(--ease),
+    transform 0.25s var(--ease);
+}
+
+.btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+:focus-visible {
+  outline: 2.5px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

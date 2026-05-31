@@ -1,0 +1,103 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+/* ── live ticker strip ─────────────────────────────────────── */
+.ticker {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.tickerInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space, 16px);
+  height: 34px;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.tickerInner > span:nth-child(2) {
+  opacity: 0.7;
+}
+
+.live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55em;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 0 var(--accent);
+  animation: pulse 1.8s var(--ease) infinite;
+}
+
+.edition {
+  opacity: 0.55;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(232, 67, 31, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 7px rgba(232, 67, 31, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(232, 67, 31, 0);
+  }
+}
+
+.main {
+  flex: 1;
+  padding: clamp(40px, 7vw, 88px) 0 clamp(56px, 8vw, 104px);
+}
+
+/* ── colophon footer ───────────────────────────────────────── */
+.footer {
+  border-top: 2px solid var(--line);
+  padding: 26px 0;
+}
+
+.footerInner {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.footMark {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+}
+
+.footNote {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 560px) {
+  .tickerInner > span:nth-child(2) {
+    display: none;
+  }
+  .footerInner {
+    flex-direction: column;
+    gap: 6px;
+  }
+}
