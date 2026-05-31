@@ -11,12 +11,15 @@ Every source fails independently and gracefully; if one is down, the others
 still fill the list. No fake/sample data.
 """
 
+import os
 from urllib.parse import quote_plus, urlparse
 
 import feedparser
 import requests
 
-REQUEST_TIMEOUT = 10
+# Tighter per-source budget on serverless (Vercel ~10s function limit); the
+# three sources run sequentially, so keep each quick.
+REQUEST_TIMEOUT = 7 if os.environ.get("VERCEL") else 10
 USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
     "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 TrendFinder/1.0"
@@ -41,7 +44,10 @@ def from_google_news(query, limit=5):
         "https://news.google.com/rss/search?q="
         f"{quote_plus(query)}&hl=en-US&gl=US&ceid=US:en"
     )
-    feed = feedparser.parse(url, request_headers=HEADERS)
+    # Fetch with an explicit timeout (feedparser.parse(url) has none and can hang).
+    resp = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
+    resp.raise_for_status()
+    feed = feedparser.parse(resp.content)
     results = []
     for entry in feed.entries[:limit]:
         source = getattr(getattr(entry, "source", None), "title", None) or "Google News"

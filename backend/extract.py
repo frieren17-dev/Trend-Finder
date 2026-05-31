@@ -9,6 +9,7 @@ Google News links use a browser-only redirect a server can't follow, so we
 detect them and signal the frontend to ask the user for the real URL.
 """
 
+import os
 import re
 from urllib.parse import urlparse
 
@@ -17,7 +18,8 @@ from bs4 import BeautifulSoup
 
 import gemini
 
-REQUEST_TIMEOUT = 12
+# Shorter fetch budget on serverless (Vercel ~10s function limit).
+REQUEST_TIMEOUT = 8 if os.environ.get("VERCEL") else 12
 HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "

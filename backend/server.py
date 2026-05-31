@@ -13,12 +13,19 @@ read from the root .env via python-dotenv and is never sent to the browser.
 
 import os
 
+import requests
 from dotenv import load_dotenv
-from flask import Flask, jsonify, request
+from flask import Flask, Response, jsonify, request
 from flask_cors import CORS
 
 import extract
+import gemini
 import trending
+
+PROXY_UA = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+)
 
 # Load the project-root .env (one level up from backend/).
 load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
@@ -77,6 +84,45 @@ def article_text_endpoint():
         return jsonify({"error": str(exc), "url": url, "text": ""}), 502
 
     return jsonify(result)
+
+
+@app.post("/api/gemini")
+def gemini_proxy():
+    """Run Gemini on supplied article text (Browse & Pick path).
+
+    The key stays server-side. Folded in from serve.mjs so a single serverless
+    function covers all backend routes on Vercel.
+    """
+    data = request.get_json(silent=True) or {}
+    title = (data.get("title") or "").strip()
+    text = (data.get("text") or "").strip()
+    if not text:
+        return jsonify({"error": "text is required"}), 400
+    try:
+        result = gemini.extract_ideas(title, text)
+    except gemini.GeminiUnavailable as exc:
+        msg = str(exc)
+        code = 429 if "rate limit" in msg.lower() else 502
+        return jsonify({"error": msg, "items": []}), code
+    return jsonify(result)
+
+
+@app.get("/img")
+def img_proxy():
+    """Stream a remote image (so Reddit/news thumbnails load past CORS/hotlink)."""
+    target = (request.args.get("url") or "").strip()
+    if not (target.startswith("http://") or target.startswith("https://")):
+        return jsonify({"error": "bad url"}), 400
+    try:
+        r = requests.get(target, headers={"User-Agent": PROXY_UA}, timeout=10)
+        r.raise_for_status()
+    except requests.RequestException:
+        return jsonify({"error": "image fetch failed"}), 502
+    return Response(
+        r.content,
+        mimetype=r.headers.get("content-type", "image/jpeg"),
+        headers={"Cache-Control": "public, max-age=86400"},
+    )
 
 
 def _google_news_payload(url):

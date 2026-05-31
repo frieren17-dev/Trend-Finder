@@ -16,13 +16,17 @@ GEMINI_URL = (
     "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
 )
 DEFAULT_MODEL = "gemini-2.5-flash"
-TIMEOUT = 45
+
+# Serverless (Vercel) functions have a short wall-clock budget (~10s on hobby),
+# so use tighter timeouts/retries there; be more patient locally.
+_ON_VERCEL = bool(os.environ.get("VERCEL"))
+TIMEOUT = 18 if _ON_VERCEL else 45
 
 # Gemini is frequently, transiently OVERLOADED (5xx) — retry those with backoff.
 # A 429 is a RATE LIMIT (free-tier quota): retrying it quickly just burns more
 # quota, so we fail fast and let the caller fall back to the HTML parser.
 _RETRY_STATUSES = {500, 502, 503, 504}
-_MAX_RETRIES = 4
+_MAX_RETRIES = 2 if _ON_VERCEL else 4
 
 
 class GeminiUnavailable(Exception):
